@@ -1,0 +1,293 @@
+@import "variables";
+@import "modules";
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+img{
+    mix-blend-mode: darken; //*default olarak resimlerden gelen arka planı otomayik body arka planı ne rengise ona uyumlu hale getiriyor
+}
+body{
+    background-color: $bg-color;
+    font-family: $main-font;
+    overflow-x: hidden; //*taşmaları engelliyor x ekseninde
+}
+
+//? RESPONSIVE TASAARIM
+@mixin mobile{
+    @media (max-width: 800px){
+        @content;
+    }
+}
+
+@mixin laptop{
+    @media (min-width: 800px) and (max-width: 1400px){
+        @content;
+    }
+}
+//? HEADER ALANI
+header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center; //* dikeyde ortalıyoruz aynı izaya gelmeleri için
+    position: relative; //*pozisyonlamada sabitleye bilmek için
+    //! header içinde ki img
+    img{
+        width: 50px;
+        margin-left: 20px; //*soldan 20px uzaklaştırıyoruz
+    }
+    nav{
+        display: flex;
+        align-items: center;
+        //! nav içinde ki a
+        a{
+            text-decoration: none;
+            color: $text-color;
+            &:hover{
+                color: crimson;
+                transition: all .5s; //*herbiri için geçerli olsun .5s
+            }
+        }
+    }
+}
+#nav-left{
+    a{
+        padding: 0 20px; //*sağdan solda 20px yukarıdan aşağı 0
+        border-right: 1px solid gray; //*her bir a nın arasına diklemesine çizgi koyuyoruz
+        &:last-child{
+            border-right: none; //*navın sağ tarafında ki yazılara geçen dikey çizgiyi yok et
+        }
+    }
+}
+#nav-right{
+    gap: 30px; //*aralarını açıyoruz
+    font-size: 15px;
+    @include mobile {
+        display: none;
+    }
+}
+.opener{
+    display: none; //* ile menunun yanında ki link yazılarını kaldırdık
+    position: absolute;
+    right: 0; //*kendini sağ yasla
+    bottom: -125px;
+    background-color: rgb(220, 220, 220);
+    box-shadow: 2px 2px 10px;
+    flex-direction: column; //*çalışması için display:flex olması gerek
+    gap: 20px;
+    padding: 5px;
+    border-radius: 10px;
+    a{
+        text-decoration: none;
+        color: #000;
+    }
+}
+.menu{
+    width: 40px;
+    display: none;
+    @include mobile{ //*ile menu butonu gözüküyor
+        display: block;
+    }
+    &:hover + opener{
+        display: flex;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+//? BANNAR ALANI
+.hero{
+    display: flex;
+    justify-content: space-between; //*aralarını açalım
+    padding: 50px 100px; //*yukarıdan aşağı 50 sağdan soldan 100px
+    background: linear-gradient(rgb(215,215,215), 40%,$bg-color);
+    @include mobile {
+        flex-direction: column;
+        align-items: center;
+        padding: 30px 40px;
+    }
+    @include laptop {
+        flex-direction: column;
+        align-items: center;
+        gap: 100px;
+    }
+}
+.slogan{
+    display: flex;
+    flex-direction: column; //*alt alta alalım
+    align-items: center; //*dikeyde ortalayalım
+    gap: 60px; //*aralarını gap ile açalım
+    max-width: 500px;
+    @include mobile{
+        gap: 20px
+    }
+    h1{
+        @extend %heading;
+        font-size: 40px;
+        @include mobile{
+            text-align: center;
+        }
+        span{
+            font-family: 'Times New Roman', Times, serif;
+        }
+    }
+    p {
+        @extend %p;
+
+    }
+    img{
+        width: 200px; //*sol taraftaki siyah aracımızın boyutunu oturttuk
+    }
+    h2{
+        @extend %heading;
+    }
+    button{
+        @extend %button;
+        background-color: crimson;
+        &:hover{
+            background-color: rgb(168, 16, 46);
+            transition: all 0.4s;
+        }
+    }
+}
+.images{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 30px;
+    &-banner{
+        max-width: 800px;
+        @include laptop{
+            max-width: 500px;
+        }
+    }
+    &-track{
+        max-width: 500px;
+    }
+    p{
+        max-width: 500px;
+        text-align: center;
+    }
+}
+
+
+
+
+
+//? İÇ TASARIM ALANI
+#interior{
+    @extend %design;
+    background-image: radial-gradient(rgba(0,0,0,0.5), black),url("/Images/bmw-6.jpeg");
+    p{
+        font-size: 17px;
+        font-weight: bold;
+        @include mobile{
+            font-size: 15px;
+        }
+    }
+}
+
+
+
+
+
+
+
+//? CARS ALANI
+#cars-area{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50px 0;
+    .cars{
+        display: flex;
+        @include mobile{
+            flex-direction: column;
+        }
+        img{
+            width: 300px;
+        }
+        h3{
+            text-align: center;
+        }
+    }
+    button{
+        @extend %button;
+        background-color: aqua;
+        margin-top: 50px;
+        &:hover{
+            background-color: rgb(0, 180, 180);
+            transition: all 0.5s;
+        }
+    }
+}
+
+
+
+
+
+
+
+//? SKYLINE ALANI
+#exterior{
+    @extend %design;
+    background-image: radial-gradient(rgba(0,0,0,0.3), black),url("/Images/bmw-6.jpeg");
+    p{
+        font-size: 20px;
+        @include mobile{
+            font-size: 15px;
+        }
+    }
+}
+
+
+
+
+
+
+//? FOOTER ALANI
+footer{
+    display: flex;
+    justify-content: space-around; //* baştan ve soldan mesafe vererek hizalıyor
+    flex-wrap: wrap;
+    align-items: center;
+    background-color: #000;
+    padding: 50px;
+    @include mobile{
+        flex-direction: column;
+        gap: 40px;
+    }
+    img{
+        width: 50px;
+        height: 90px;
+        mix-blend-mode: unset; //*arka plandan kendini ayır
+    }
+    .footer-links{
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+        @include mobile{
+            align-items: center
+        }
+    }
+    h2{
+        @extend %heading;
+        color: white;
+    }
+    a{
+        color: white;
+        text-decoration: none;
+    }
+}
